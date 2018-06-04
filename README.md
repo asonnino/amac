@@ -4,7 +4,7 @@
 
 This repo provides an implementation of the work *Algebraic MACs and keyed-verification anonymous credentials.* of Chase *et al.* A link to the original paper is available [here](http://www0.cs.ucl.ac.uk/staff/S.Meiklejohn/files/ccs14.pdf).
 
-The [master branch](https://github.com/asonnino/amac) extends this scheme by providing support for threshold issuance.
+We also extend this scheme by providing support for threshold issuance; an implementation is available [here](https://github.com/asonnino/threshold-amac).
 
 
 ## Pre-requisites
