@@ -12,9 +12,13 @@ This implementation is built on top of [petlib](https://github.com/gdanezis/petl
 
 
 ## Install
-You can build it manually as below:
+If you have `pip` installed, you can install **amac** with the following command:
 ```
-$ git clone -b original https://github.com/asonnino/amac
+$ pip install amac
+```
+otherwise, you can build it manually as below:
+```
+$ git clone https://github.com/asonnino/amac
 $ cd amac
 $ pip install -e .
 ```
