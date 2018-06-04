@@ -1,2 +1,34 @@
-# amac
-Algebraic MACs and keyed-verification anonymous credentials.
+# Algebraic MACs and keyed-verification anonymous credentials.
+[![license](https://img.shields.io/badge/license-GPL3-brightgreen.svg)](https://github.com/asonnino/amac/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/asonnino/amac.svg?branch=master)](https://travis-ci.org/asonnino/amac)
+
+This repo provides an implementation of the work *Algebraic MACs and keyed-verification anonymous credentials.* of Chase *et al.* A link to the original paper is available [here](http://www0.cs.ucl.ac.uk/staff/S.Meiklejohn/files/ccs14.pdf).
+
+The [master branch](https://github.com/asonnino/amac) extends this scheme by providing support for threshold issuance.
+
+
+## Pre-requisites
+This implementation is built on top of [petlib](https://github.com/gdanezis/petlib), make sure to follow [these instructions](https://github.com/gdanezis/petlib#pre-requisites) to install all the pre-requisites.
+
+
+## Install
+You can build it manually as below:
+```
+$ git clone -b original https://github.com/asonnino/amac
+$ cd amac
+$ pip install -e .
+```
+
+
+## Test
+Tests can be run as follows:
+```
+$ pytest -v --cov=amac tests/
+```
+or simply using tox:
+```
+$ tox
+```
+
+## License
+[The GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.en.html)
