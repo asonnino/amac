@@ -24,7 +24,7 @@ def cred_keygen(params, q):
 	return (iparams, sk)
 	
 
-def prepare_blind_sign(params, gamma, private_m):
+def prepare_blind_issue(params, gamma, private_m):
 	""" prepare issuance of credentials """
 	assert gamma and len(private_m) > 0
 	(G, o, g, h) = params
@@ -73,21 +73,18 @@ def blind_issue(params, sk, iparams=None, gamma=None, c=[], pi_prepare_issue=Non
 		return (u, u_prime, pi_issue)
 		
 
-def blind_obtain(params, iparams, u, u_prime, pi_issue, biparams=None, gamma=None, c=[], public_m=[]):
+def blind_obtain(params, iparams, u, u_prime, pi_issue, biparams=None, d=None, gamma=None, c=[], public_m=[]):
 	""" verify credentials issuance """
 	assert len(c)+len(public_m) > 0
 	# verify proof of issuance
-	return verify_pi_issue(params, iparams, u, u_prime, pi_issue, biparams=biparams, gamma=gamma, 
+	assert verify_pi_issue(params, iparams, u, u_prime, pi_issue, biparams=biparams, gamma=gamma, 
 		ciphertext=c, public_m=public_m)
+	if len(c):
+		return (u, elgamal_dec(d, u_prime))
+	else:
+		return (u, u_prime)
 
-
-def unblind(d, u_prime):
-	""" unblind credentials on private attributes """
-	assert d and u_prime
-	return elgamal_dec(d, u_prime)
-
-
-def show(params, iparams, cred, private_m=[], public_m=[]):
+def blind_show(params, iparams, cred, private_m=[], public_m=[]):
 	""" show credentials """
 	attributes = private_m + public_m
 	assert cred and len(attributes) > 0
@@ -107,7 +104,7 @@ def show(params, iparams, cred, private_m=[], public_m=[]):
 	return (sigma, pi_show)
 
 
-def show_verify(params, sk, iparams, sigma, pi_show):
+def blind_verify(params, sk, iparams, sigma, pi_show):
 	""" verify credentials """
 	assert iparams and sigma and pi_show
 	(x, _) = sk

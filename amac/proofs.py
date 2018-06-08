@@ -156,7 +156,6 @@ def make_pi_show(params, iparams, m, r, z, u_prime, sigma):
 	""" make credentials showing proof """
 	(G, o, g, h) = params
 	(_, X) = iparams
-	print(m)
 	assert len(X) >= len(m)
 	(u, Cm, Cu_prime) = sigma
 	# create the witnesses
