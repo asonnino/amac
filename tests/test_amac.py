@@ -42,10 +42,30 @@ def test_private_attributes():
 	# credentials showing	
 	(sigma, pi_show) = blind_show(params, iparams, (u, u_prime), private_m=private_m, public_m=public_m)
 	assert blind_verify(params, sk, iparams, sigma, pi_show)
-	
-
-	
 
 
+def test_identity_credential_rejected():
+	# regression for #1: a presentation built from the identity "credential"
+	# (no issuance) must not verify
+	q = 2
+	public_m = [10, 20]
+	params = setup()
+	(G, o, g, h) = params
+	(iparams, sk) = cred_keygen(params, q)
 
-	
+	# the honest prover refuses the identity credential
+	try:
+		blind_show(params, iparams, (G.infinite(), G.infinite()), public_m=public_m)
+		assert False, "blind_show accepted the identity credential"
+	except ValueError:
+		pass
+
+	# a forged presentation over u = identity, with a proof that is valid for
+	# the unpatched verifier, is rejected
+	r = o.random()
+	z = [o.random() for _ in public_m]
+	Cm = [zi*h for zi in z]
+	Cu_prime = r*g
+	sigma = (G.infinite(), Cm, Cu_prime)
+	pi_show = make_pi_show(params, iparams, public_m, r, z, G.infinite(), sigma)
+	assert not blind_verify(params, sk, iparams, sigma, pi_show)

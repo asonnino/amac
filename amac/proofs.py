@@ -180,7 +180,8 @@ def verify_pi_show(params, iparams, sigma, pi_show, V):
 	(G, o, g, h) = params
 	(_, X) = iparams
 	(u, Cm, Cu_prime) = sigma
-	assert u and len(X) >= len(Cm) > 0 and Cu_prime
+	if u == G.infinite() or not len(X) >= len(Cm) > 0:
+		return False
 	(c, rr, rm, rz) = pi_show
 	# re-compute the witnesses commitments
 	Aw = [rmi*u + rzi*h + c*Cmi for (rmi,rzi,Cmi) in zip(rm,rz,Cm)]

@@ -90,9 +90,12 @@ def blind_show(params, iparams, cred, private_m=[], public_m=[]):
 	assert cred and len(attributes) > 0
 	(G, o, g, h) = params
 	(u0, u0_prime) = cred
-	assert u0 and u0_prime
-	# randomize credentials
+	if u0 == G.infinite():
+		raise ValueError("invalid credential: u is the identity")
+	# randomize credentials (with a nonzero randomizer)
 	a = o.random()
+	while a == 0:
+		a = o.random()
 	(u, u_prime) = (a*u0, a*u0_prime)
 	# form commitments
 	r = o.random()
@@ -106,10 +109,13 @@ def blind_show(params, iparams, cred, private_m=[], public_m=[]):
 
 def blind_verify(params, sk, iparams, sigma, pi_show):
 	""" verify credentials """
-	assert iparams and sigma and pi_show
+	(G, o, g, h) = params
 	(x, _) = sk
 	(u, Cm, Cu_prime) = sigma
-	assert u and len(Cm) > 0 and Cu_prime
+	# explicit checks (not assertions, which are stripped under python -O);
+	# u must not be the identity, otherwise the proof is trivially satisfiable
+	if u == G.infinite() or len(Cm) == 0 or len(Cm) > len(x) - 1:
+		return False
 	V = x[0]*u + ec_sum([xi*Cmi for (xi,Cmi) in zip(x[1:],Cm)]) - Cu_prime
 	return verify_pi_show(params, iparams, sigma, pi_show, V)
 
