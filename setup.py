@@ -17,7 +17,7 @@ setup(
     name='amac',  # Required
 
     # Versions.
-    version='0.0.1',  # Required
+    version='0.0.2',  # Required
 
     # One-line description.
     description='Algebraic MACs and keyed-verification anonymous credentials.',  # Required
@@ -29,7 +29,7 @@ setup(
     long_description_content_type='text/markdown',  # Optional
 
     # Link to the project's main homepage.
-    url='https://pypi.org/project/amac-lib',  # Optional
+    url='https://github.com/asonnino/amac',  # Optional
 
     # Author of the project.
     author='Alberto Sonnino',  # Optional
